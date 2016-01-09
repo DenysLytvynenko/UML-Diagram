@@ -3,8 +3,7 @@
  */
 package file;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class Text extends MyFile {
 
@@ -13,16 +12,32 @@ public class Text extends MyFile {
 
     }
 @Override
-    public void createMyFile(String fileName) throws IOException {
+    public void createMyFile(String fileName, String text) throws IOException {
 
     File file = new File(fileName);
-    System.out.printf("File name is %s", fileName);
+    System.out.printf("File name is %s\n", fileName);
     if(!file.exists()){
         if(file.createNewFile()){
-            System.out.printf("File with name %s was created", fileName);
+            System.out.printf("File with name %s was created\n", fileName);
         } else {
-            System.out.printf("File with name %s is already created", fileName);
+            System.out.printf("File with name %s is already created\n", fileName);
         }
+    } else {
+        System.out.printf("File with name %s is already exist\n", fileName);
+    }
+
+    try
+    {
+
+        FileWriter fw = new FileWriter(fileName,true); //the true will append the new data
+        StringBuffer sb = new StringBuffer();
+        String fullText = sb.append(text).append("\n").toString();
+        fw.write(fullText);//appends the string to the file
+        fw.close();
+    }
+    catch(IOException ioe)
+    {
+        System.err.println("IOException: " + ioe.getMessage());
     }
 
 }
